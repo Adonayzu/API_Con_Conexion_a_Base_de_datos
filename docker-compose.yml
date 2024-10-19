@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  mysql-api: # nombre del servicio, caja donde hay varios contenedores
+    image: mysql
+    container_name: mysql-api-container   #nombre del contenedor
+    environment: #varoables de ambiente
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: estudiantes_db_api
+      MYSQL_USER: adonay
+      MYSQL_PASSWORD: 12345
+      #hora central
+      TZ: "CST"
+    command: ["--default-time-zone=-06:00"] #asignar la hora acutal
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-api:/var/lib/mysql #esta vinculado con el contenedor a la ruta var lib mysql
+    networks:
+        - api-network
+
+
+volumes:
+  mysql-api:
+
+networks:
+  api-network:
+    driver: bridge #driver de red
